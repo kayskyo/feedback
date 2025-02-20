@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工资发放的问题反馈表</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #2c3e50;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #34495e;
+        }
+
+        .question-group {
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        .question {
+            font-size: 16px;
+            font-weight: bold;
+            color: #34495e;
+            margin-bottom: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 12px;
+            border: 1px solid #d1d1d1;
+            border-radius: 5px;
+            font-size: 14px;
+            resize: vertical;
+            background-color: #fbfbfb;
+            margin-bottom: 12px;
+        }
+
+        .phone-input-group {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .phone-label {
+            font-weight: bold;
+            font-size: 14px;
+            color: #34495e;
+        }
+
+        .phone-input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #d1d1d1;
+            border-radius: 5px;
+            font-size: 14px;
+            background-color: #fbfbfb;
+        }
+
+        .submit-button {
+            display: block;
+            width: 100%;
+            padding: 14px 0;
+            border: none;
+            border-radius: 5px;
+            background-color: #0059a7;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 24px;
+        }
+
+        .submit-button:hover {
+            background-color: #004376;
+        }
+
+        /* 提交成功页面样式 */
+        .success-page {
+            display: none;
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .success-message {
+            margin-bottom: 24px;
+            font-size: 18px;
+            color: #34495e;
+        }
+
+        .confirm-button {
+            padding: 14px 24px;
+            border: none;
+            border-radius: 5px;
+            background-color: #28a745;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .confirm-button:hover {
+            background-color: #218838;
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            body {
+                background-color: #ffffff;
+            }
+
+            .container {
+                margin: 20px auto;
+                padding: 20px;
+                box-shadow: none;
+            }
+
+            .title {
+                font-size: 20px;
+                margin-bottom: 20px;
+            }
+
+            textarea {
+                min-height: 120px;
+                margin-bottom: 10px;
+            }
+
+            .phone-input-group {
+                flex-wrap: wrap;
+            }
+
+            .phone-label {
+                margin-bottom: 8px;
+            }
+
+            .phone-input {
+                width: 100%;
+            }
+
+            .submit-button {
+                padding: 12px 0;
+                margin-top: 16px;
+            }
+
+            .success-page {
+                margin: 20px auto;
+                padding: 20px;
+            }
+
+            .success-message {
+                font-size: 16px;
+                margin-bottom: 16px;
+            }
+
+            .confirm-button {
+                padding: 12px 16px;
+                margin-top: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="feedbackContainer">
+        <h1 class="title">工资发放等相关问题反馈表</h1>
+
+        <!-- 问题一 -->
+        <div class="question-group">
+            <label for="question1" class="question">是否有拖欠工资的情况？如有，请详细描述：</label>
+            <textarea id="question1" maxlength="1000"></textarea>
+        </div>
+
+        <!-- 问题二 -->
+        <div class="question-group">
+            <label for="question2" class="question">有无违规克扣工资的情况？如有，请详细描述：</label>
+            <textarea id="question2" maxlength="1000"></textarea>
+        </div>
+
+        <!-- 问题三 -->
+        <div class="question-group">
+            <label for="question3" class="question">有无其他工资分配不合理的情况？如有，请详细描述：</label>
+            <textarea id="question3" maxlength="1000"></textarea>
+        </div>
+
+        <!-- 手机号输入部分 -->
+        <div class="question-group">
+            <p class="question">为保证您的问题能够及时以短信形式进行反馈，请补充信息：</p>
+            <div class="phone-input-group">
+                <span class="phone-label">手机号：</span>
+                <input type="tel" class="phone-input" placeholder="请输入您的手机号码" maxlength="11">
+            </div>
+        </div>
+
+        <!-- 提交按钮 -->
+        <button type="button" class="submit-button" id="submitButton">提交</button>
+    </div>
+
+    <!-- 提交成功页面 -->
+    <div class="success-page" id="successPage">
+        <h2 class="success-message">信息提交成功，感谢您的反馈！<br>如有补充信息，可继续反馈。</h2>
+        <button type="button" class="confirm-button" id="confirmButton">确定</button>
+    </div>
+
+    <script>
+        const feedbackContainer = document.getElementById('feedbackContainer');
+        const successPage = document.getElementById('successPage');
+        const submitButton = document.getElementById('submitButton');
+        const confirmButton = document.getElementById('confirmButton');
+
+        submitButton.addEventListener('click', function() {
+            feedbackContainer.style.display = 'none';
+            successPage.style.display = 'block';
+        });
+
+        confirmButton.addEventListener('click', function() {
+            feedbackContainer.style.display = 'block';
+            successPage.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
