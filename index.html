@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>工资发放的问题反馈表</title>
+    <title>工资发放情况反馈表</title>
     <style>
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
@@ -184,6 +184,15 @@
         }
     </style>
 </head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-K4E501WJC9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-K4E501WJC9');
+</script>
 <body>
     <div class="container" id="feedbackContainer">
         <h1 class="title">工资发放等相关问题反馈表</h1>
@@ -240,6 +249,48 @@
             feedbackContainer.style.display = 'block';
             successPage.style.display = 'none';
         });
+        document.getElementById('feedbackForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // 获取表单数据
+            const formData = {
+                phone: document.getElementById('phone').value,
+                // 获取用户设备信息
+                userAgent: navigator.userAgent,
+                platform: navigator.platform,
+                screenWidth: screen.width,
+                screenHeight: screen.height,
+                language: navigator.language,
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+            };
+
+            // 获取地理位置信息（需要用户授权）
+            navigator.geolocation.getCurrentPosition(position => {
+                formData.latitude = position.coords.latitude;
+                formData.longitude = position.coords.longitude;
+
+                // 获取 IP 地址和网络类型（需要第三方 API）
+                fetch('https://ipapi.co/json/')
+                    .then(response => response.json())
+                    .then(data => {
+                        formData.ip = data.ip;
+                        formData.networkType = data.connection.type;
+
+                        // 将数据发送到后端
+                        fetch('https://你的后端地址/api/feedback', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(formData)
+                        })
+                        .then(response => console.log('数据已发送:', response))
+                        .catch(error => console.error('数据发送失败:', error));
+                    })
+                    .catch(error => console.error('IP 地址获取失败:', error));
+            }, error => console.error('地理位置获取失败:', error));
+        });
+
     </script>
 </body>
 </html>
